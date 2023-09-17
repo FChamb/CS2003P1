@@ -47,7 +47,7 @@ public class SimpleServer {
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
             Scanner clientInput = new Scanner(connection.getInputStream());
-            PrintWriter p = new PrintWriter(connection.getOutputStream());
+            PrintStream p = new PrintStream(connection.getOutputStream());
             String userResponse = clientInput.nextLine();
             System.out.println(userResponse);
             if (userResponse.equals("hello")) {

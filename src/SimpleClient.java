@@ -8,6 +8,7 @@ public class SimpleClient {
     private String IPAddress = "";
     private String portnumber = "";
     static int userResponseTime = 5000;
+    static String LINEEND = "\r\n";
 
     public static void main(String[] args) {
         try {
@@ -57,7 +58,8 @@ public class SimpleClient {
             System.out.println("Enter:");
             String response = userInput.nextLine();
             PrintStream p = new PrintStream(connection.getOutputStream());
-            p.println(response);
+            p.println(response + LINEEND);
+            p.flush();
             Thread.sleep(1000);
             String serverResp = serverResponse.nextLine();
             System.out.println(serverResp);
