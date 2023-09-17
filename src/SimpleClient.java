@@ -66,9 +66,7 @@ public class SimpleClient {
                 clientResponse = protocol[protoNumber];
                 System.out.println("Input: " + clientResponse);
                 p.println(clientResponse);
-//                p.println(clientResponse + LINEEND);
                 p.flush();
-//                Thread.sleep(1000);
                 serverResponse = serverInput.nextLine();
                 System.out.println("Output: " + serverResponse);
                 protoNumber += 2;
@@ -78,8 +76,6 @@ public class SimpleClient {
             }
 
             connection.close();
-//        } catch (InterruptedException e) {
-//            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }
