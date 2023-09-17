@@ -1,8 +1,7 @@
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class SimpleClient {
 
@@ -53,28 +52,15 @@ public class SimpleClient {
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            byte[] buffer = new byte[80];
-            int b = 0;
-            if (System.in.available() > 0) {
-                b = System.in.read(buffer);
-            }
-
-            if (b > 0) {
-                out.write(buffer, 0, b);
-            }
-
-            Thread.sleep(userResponseTime);
-            buffer = new byte[80];
-            b = in.read(buffer);
-
-//            if (b > 0) {
-//                String s = new String(buffer);
-//                System.out.println("-> " + s);
-//            }
-
+            Scanner userInput = new Scanner(System.in);
+            Scanner serverResponse = new Scanner(new InputStreamReader(connection.getInputStream()));
+            System.out.println("Enter:");
+            String response = userInput.nextLine();
+            PrintStream p = new PrintStream(connection.getOutputStream());
+            p.println(response);
             connection.close();
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
+//        } catch (InterruptedException e) {
+//            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }

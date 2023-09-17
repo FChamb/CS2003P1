@@ -3,6 +3,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class SimpleServer {
 
@@ -47,22 +48,11 @@ public class SimpleServer {
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            byte[] buffer = new byte[80];
-            int b = 0;
-            while (b < 1) {
-                Thread.sleep(100);
-                buffer = new byte[80];
-                b = in.read(buffer);
-            }
-
-            if (b > 0) {
-                String s = new String(buffer);
-                System.out.println("-> " + s);
-                out.write(buffer, 0, b);
-                connection.close();
-            }
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
+            Scanner clientInput = new Scanner(connection.getInputStream());
+            String userResponse = clientInput.nextLine();
+            System.out.println(userResponse);
+//        } catch (InterruptedException e) {
+//            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }
