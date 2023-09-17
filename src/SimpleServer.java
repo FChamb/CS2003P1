@@ -59,9 +59,7 @@ public class SimpleServer {
             while (active) {
                 clientResponse = clientInput.nextLine();
                 serverResponse = protocol[protoNumber];
-                if (clientResponse != null) {
-                    System.out.println("Output: " + clientResponse);
-                }
+                System.out.println("Output: " + clientResponse);
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
