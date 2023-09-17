@@ -52,7 +52,7 @@ public class SimpleServer {
             System.out.println(userResponse);
             if (userResponse.equals("hello")) {
                 System.out.println("correct");
-                p.print("Hello to you too!");
+                p.println("Hello to you too!");
             }
             connection.close();
 //        } catch (InterruptedException e) {
