@@ -23,14 +23,14 @@ public class SimpleClient {
             Socket connection = startClient(args[0], args[1]);
             OutputStream out = connection.getOutputStream();
             InputStream in = connection.getInputStream();
-            Thread.sleep(userResponseTime);
+//            Thread.sleep(userResponseTime);
 
             runProtocol(in, out, connection);
 
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
+//        } catch (InterruptedException e) {
+//            System.err.println("Interrupted Exception: " + e.getMessage());
         }
     }
 

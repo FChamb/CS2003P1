@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -49,8 +50,10 @@ public class SimpleServer {
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
             Scanner clientInput = new Scanner(connection.getInputStream());
+            PrintStream p = new PrintStream(connection.getOutputStream());
             String userResponse = clientInput.nextLine();
-            System.out.println(userResponse);
+            p.println("Hello to you too!");
+            connection.close();
 //        } catch (InterruptedException e) {
 //            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
