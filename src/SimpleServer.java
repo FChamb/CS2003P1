@@ -54,6 +54,7 @@ public class SimpleServer {
             String userResponse = clientInput.nextLine();
             System.out.println(userResponse);
             if (userResponse.equals("hello")) {
+                System.out.println("correct");
                 p.println("Hello to you too!");
             }
             connection.close();
