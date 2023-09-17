@@ -57,12 +57,9 @@ public class SimpleServer {
             int protoNumber = 1;
 
             while (active) {
-                if (!clientInput.hasNext()) {
-                    Thread.sleep(5000);
-                    continue;
-                }
                 clientResponse = clientInput.nextLine();
                 serverResponse = protocol[protoNumber];
+                System.out.println(serverResponse);
                 System.out.println("Output: " + clientResponse);
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
                     System.out.println("Input: " + serverResponse);
@@ -77,8 +74,6 @@ public class SimpleServer {
             }
 
             connection.close();
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }
