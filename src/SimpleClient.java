@@ -59,7 +59,6 @@ public class SimpleClient {
             String response = userInput.nextLine();
             PrintStream p = new PrintStream(connection.getOutputStream());
             p.println(response + LINEEND);
-            p.flush();
             Thread.sleep(1000);
             String serverResp = serverResponse.nextLine();
             System.out.println(serverResp);
