@@ -9,6 +9,9 @@ public class SimpleClient {
     private String portnumber = "";
     static int userResponseTime = 5000;
     static String LINEEND = "\r\n";
+    private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
+            "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
+            "YOU'RE WELCOME"};
 
     public static void main(String[] args) {
         try {
@@ -53,19 +56,28 @@ public class SimpleClient {
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            Scanner userInput = new Scanner(System.in);
-            Scanner serverResponse = new Scanner(new InputStreamReader(connection.getInputStream()));
-            System.out.println("Enter:");
-            String response = userInput.nextLine();
+            Scanner clientInput = new Scanner(System.in);
+            Scanner serverInput = new Scanner(new InputStreamReader(connection.getInputStream()));
             PrintStream p = new PrintStream(connection.getOutputStream());
-            p.println(response + LINEEND);
-            p.flush();
-            Thread.sleep(1000);
-            String serverResp = serverResponse.nextLine();
-            System.out.println(serverResp);
+            String clientResponse, serverResponse;
+            boolean active = true;
+
+            while (active) {
+                System.out.print("Input: ");
+                clientResponse = clientInput.nextLine();
+                p.println(clientResponse + LINEEND);
+                p.flush();
+//                Thread.sleep(1000);
+                serverResponse = serverInput.nextLine();
+                System.out.println("Output: " + serverResponse);
+                if (serverResponse.equals(protocol[5])) {
+                    active = false;
+                }
+            }
+
             connection.close();
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
+//        } catch (InterruptedException e) {
+//            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }

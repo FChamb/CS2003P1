@@ -8,6 +8,10 @@ public class SimpleServer {
     private static int port;
     private static ServerSocket server;
 
+    private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
+            "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
+            "YOU'RE WELCOME"};
+
     public static void main(String[] args) {
         try {
             if (args.length != 1) {
@@ -47,13 +51,25 @@ public class SimpleServer {
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
             Scanner clientInput = new Scanner(connection.getInputStream());
-            PrintStream p = new PrintStream(connection.getOutputStream());
-            String userResponse = clientInput.nextLine();
-            System.out.println(userResponse);
-            if (userResponse.equals("hello")) {
-                System.out.println("correct");
-                p.println("Hello to you too!");
+            PrintStream print = new PrintStream(connection.getOutputStream());
+            String clientResponse, serverResponse;
+            boolean active = true;
+            int protoNumber = 1;
+
+            while (active) {
+                clientResponse = clientInput.nextLine();
+                serverResponse = protocol[protoNumber];
+                System.out.println("Output: " + clientResponse);
+                if (clientResponse.equals(protocol[protoNumber - 1])) {
+                    System.out.println("Input: " + serverResponse);
+                    print.println(serverResponse);
+                }
+                protoNumber += 2;
+                if (protoNumber >= protocol.length) {
+                    active = false;
+                }
             }
+
             connection.close();
 //        } catch (InterruptedException e) {
 //            System.err.println("Interrupted Exception: " + e.getMessage());
