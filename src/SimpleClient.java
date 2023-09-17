@@ -58,9 +58,12 @@ public class SimpleClient {
             String response = userInput.nextLine();
             PrintStream p = new PrintStream(connection.getOutputStream());
             p.println(response);
+            Thread.sleep(1000);
+            String serverResp = serverResponse.nextLine();
+            System.out.println(serverResp);
             connection.close();
-//        } catch (InterruptedException e) {
-//            System.err.println("Interrupted Exception: " + e.getMessage());
+        } catch (InterruptedException e) {
+            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }
