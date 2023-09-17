@@ -52,7 +52,9 @@ public class SimpleServer {
             Scanner clientInput = new Scanner(connection.getInputStream());
             PrintStream p = new PrintStream(connection.getOutputStream());
             String userResponse = clientInput.nextLine();
-            p.println("Hello to you too!");
+            if (userResponse.equals("hello")) {
+                p.println("Hello to you too!");
+            }
             connection.close();
 //        } catch (InterruptedException e) {
 //            System.err.println("Interrupted Exception: " + e.getMessage());
