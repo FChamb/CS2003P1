@@ -59,6 +59,7 @@ public class SimpleServer {
             while (active) {
                 if (!clientInput.hasNext()) {
                     Thread.sleep(5000);
+                    continue;
                 }
                 clientResponse = clientInput.nextLine();
                 serverResponse = protocol[protoNumber];

@@ -64,7 +64,7 @@ public class SimpleClient {
 
             while (active) {
                 clientResponse = protocol[protoNumber];
-                System.out.print("Input: " + clientResponse);
+                System.out.println("Input: " + clientResponse);
                 p.println(clientResponse + LINEEND);
                 p.flush();
 //                Thread.sleep(1000);
