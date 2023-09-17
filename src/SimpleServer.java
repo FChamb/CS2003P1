@@ -52,6 +52,7 @@ public class SimpleServer {
             Scanner clientInput = new Scanner(connection.getInputStream());
             PrintStream p = new PrintStream(connection.getOutputStream());
             String userResponse = clientInput.nextLine();
+            System.out.println(userResponse);
             if (userResponse.equals("hello")) {
                 p.println("Hello to you too!");
             }
