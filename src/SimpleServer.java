@@ -57,25 +57,27 @@ public class SimpleServer {
             int protoNumber = 1;
 
             while (active) {
-                if (!clientInput.hasNext()) {
-                    Thread.sleep(5000);
-                }
+//                if (!clientInput.hasNext()) {
+//                    Thread.sleep(5000);
+//                }
                 clientResponse = clientInput.nextLine();
                 serverResponse = protocol[protoNumber];
                 System.out.println("Output: " + clientResponse);
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
+                    protoNumber += 2;
+                } else {
+                    System.out.println("Input: " + protocol[protoNumber - 1]);
                 }
-                protoNumber += 2;
                 if (protoNumber >= protocol.length) {
                     active = false;
                 }
             }
 
             connection.close();
-        } catch (InterruptedException e) {
-            System.err.println("Interrupted Exception: " + e.getMessage());
+//        } catch (InterruptedException e) {
+//            System.err.println("Interrupted Exception: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
         }

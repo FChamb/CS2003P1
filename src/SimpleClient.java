@@ -56,21 +56,22 @@ public class SimpleClient {
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            Scanner clientInput = new Scanner(System.in);
             Scanner serverInput = new Scanner(new InputStreamReader(connection.getInputStream()));
             PrintStream p = new PrintStream(connection.getOutputStream());
             String clientResponse, serverResponse;
             boolean active = true;
+            int protoNumber = 0;
 
             while (active) {
-                System.out.print("Input: ");
-                clientResponse = clientInput.nextLine();
+                clientResponse = protocol[protoNumber];
+                System.out.print("Input: " + clientResponse);
                 p.println(clientResponse + LINEEND);
                 p.flush();
 //                Thread.sleep(1000);
                 serverResponse = serverInput.nextLine();
                 System.out.println("Output: " + serverResponse);
-                if (serverResponse.equals(protocol[5])) {
+                protoNumber += 2;
+                if (protoNumber >= protocol.length) {
                     active = false;
                 }
             }
