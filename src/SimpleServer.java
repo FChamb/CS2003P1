@@ -65,7 +65,7 @@ public class SimpleServer {
                     print.println(serverResponse);
                     protoNumber += 2;
                 } else {
-                    System.out.println("Input: " + protocol[protoNumber - 1]);
+                    System.out.println("Input: " + protocol[protoNumber]);
                 }
                 if (protoNumber >= protocol.length) {
                     active = false;
