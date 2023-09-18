@@ -50,14 +50,13 @@ public class SimpleServer {
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            Scanner clientInput = new Scanner(connection.getInputStream());
-            PrintStream print = new PrintStream(connection.getOutputStream());
+            BufferedReader clientInput = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            PrintStream print = new PrintStream(connection.getOutputStream(), true);
             String clientResponse, serverResponse;
-            boolean active = true;
             int protoNumber = 1;
 
-            while (active) {
-                clientResponse = clientInput.nextLine();
+            while (protoNumber <= protocol.length) {
+                clientResponse = clientInput.readLine();
                 serverResponse = protocol[protoNumber];
                 System.out.println("Output: " + clientResponse);
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
@@ -65,10 +64,9 @@ public class SimpleServer {
                     print.println(serverResponse);
                     protoNumber += 2;
                 } else {
-                    System.out.println("Input: " + protocol[protoNumber - 2]);
-                }
-                if (protoNumber >= protocol.length) {
-                    active = false;
+                    serverResponse = protocol[protoNumber - 2];
+                    System.out.println("Input: " + serverResponse);
+                    print.println(serverResponse);
                 }
             }
 

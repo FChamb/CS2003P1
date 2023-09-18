@@ -49,30 +49,32 @@ public class SimpleClient {
 
             System.out.println("--> Connection to " + connection.toString() + " <--");
         } catch (IOException e) {
-            System.err.println("IO Exception: " + e.getMessage());
+            System.out.println("Connection refused");
+            System.exit(1);
         }
         return connection;
     }
 
     public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
         try {
-            Scanner serverInput = new Scanner(new InputStreamReader(connection.getInputStream()));
-            PrintStream p = new PrintStream(connection.getOutputStream());
-            String clientResponse, serverResponse;
-            boolean active = true;
+            BufferedReader serverInput = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            PrintStream print = new PrintStream(connection.getOutputStream(), true);
+            String clientResponse, serverResponse = "";
             int protoNumber = 0;
 
-            while (active) {
+            while (protoNumber < protocol.length) {
                 clientResponse = protocol[protoNumber];
-                System.out.println("Input: " + clientResponse);
-                p.println(clientResponse);
-                p.flush();
-                serverResponse = serverInput.nextLine();
-                System.out.println("Output: " + serverResponse);
-                protoNumber += 2;
-                if (protoNumber >= protocol.length) {
-                    active = false;
+                if (protoNumber == 0 || serverResponse.equals(protocol[protoNumber - 1])) {
+                    System.out.println("Input: " + clientResponse);
+                    print.println(clientResponse);
+                    protoNumber += 2;
+                } else {
+                    clientResponse = protocol[protoNumber - 2];
+                    System.out.println("Input: " + clientResponse);
+                    print.println(clientResponse);
                 }
+                serverResponse = serverInput.readLine();
+                System.out.println("Output: " + serverResponse);
             }
 
             connection.close();
