@@ -25,6 +25,7 @@ public class SimpleClient {
 
         try {
             Socket connection = startClient(args[0], args[1]);
+            connection.setSoTimeout(5000);
             OutputStream out = connection.getOutputStream();
             InputStream in = connection.getInputStream();
 //            Thread.sleep(userResponseTime);
