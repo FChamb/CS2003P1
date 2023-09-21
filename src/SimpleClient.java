@@ -7,8 +7,7 @@ public class SimpleClient {
 
     private String IPAddress = "";
     private String portnumber = "";
-    static int userResponseTime = 5000;
-    static String LINEEND = "\r\n";
+    static int socketTimeout = 5000;
     private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
             "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
             "YOU'RE WELCOME"};
@@ -25,17 +24,12 @@ public class SimpleClient {
 
         try {
             Socket connection = startClient(args[0], args[1]);
-            connection.setSoTimeout(5000);
-            OutputStream out = connection.getOutputStream();
-            InputStream in = connection.getInputStream();
-//            Thread.sleep(userResponseTime);
+            connection.setSoTimeout(socketTimeout);
 
-            runProtocol(in, out, connection);
+            runProtocol(connection);
 
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
-//        } catch (InterruptedException e) {
-//            System.err.println("Interrupted Exception: " + e.getMessage());
         }
     }
 
@@ -56,7 +50,7 @@ public class SimpleClient {
         return connection;
     }
 
-    public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
+    public static void runProtocol(Socket connection) {
         try {
             BufferedReader serverInput = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             PrintStream print = new PrintStream(connection.getOutputStream(), true);
@@ -80,7 +74,8 @@ public class SimpleClient {
 
             connection.close();
         } catch (IOException e) {
-            System.err.println("IO Exception: " + e.getMessage());
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 }

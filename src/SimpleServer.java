@@ -26,13 +26,11 @@ public class SimpleServer {
 
         try {
             Socket connection = server.accept();
-            OutputStream out = connection.getOutputStream();
-            InputStream in = connection.getInputStream();
             server.close();
 
             System.out.println("New connection ... " + connection.getInetAddress().getHostName() + ":" + connection.getPort());
 
-            runProtocol(in, out, connection);
+            runProtocol(connection);
 
         } catch (IOException e) {
             System.err.println("IO Exception: " + e.getMessage());
@@ -48,7 +46,7 @@ public class SimpleServer {
         }
     }
 
-    public static void runProtocol(InputStream in, OutputStream out, Socket connection) {
+    public static void runProtocol(Socket connection) {
         try {
             BufferedReader clientInput = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             PrintStream print = new PrintStream(connection.getOutputStream(), true);
@@ -64,6 +62,9 @@ public class SimpleServer {
                     print.println(serverResponse);
                     protoNumber += 2;
                 } else {
+                    if (protoNumber == 0) {
+                        throw new IOException("Error in protocol!");
+                    }
                     serverResponse = protocol[protoNumber - 2];
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
@@ -72,7 +73,8 @@ public class SimpleServer {
 
             connection.close();
         } catch (IOException e) {
-            System.err.println("IO Exception: " + e.getMessage());
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 }
