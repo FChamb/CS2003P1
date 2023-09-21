@@ -62,7 +62,7 @@ public class SimpleServer {
                     print.println(serverResponse);
                     protoNumber += 2;
                 } else {
-                    if (protoNumber == 0) {
+                    if (protoNumber == 1) {
                         throw new IOException("Error in protocol!");
                     }
                     serverResponse = protocol[protoNumber - 2];
