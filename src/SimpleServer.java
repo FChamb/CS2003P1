@@ -10,7 +10,7 @@ public class SimpleServer {
 
     private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
             "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
-            "YOU'RE WELCOME"};
+            "YOU'RE WELCOM", "VALID", "VALID"};
 
     public static void main(String[] args) {
         try {
@@ -56,8 +56,13 @@ public class SimpleServer {
             while (protoNumber <= protocol.length) {
                 clientResponse = clientInput.readLine();
                 serverResponse = protocol[protoNumber];
-                System.out.println("Output: " + clientResponse);
+                if (!clientResponse.equals(protocol[protocol.length - 2]) && protoNumber != protocol.length - 1) {
+                    System.out.println("Output: " + clientResponse);
+                }
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
+                    if (protoNumber == protocol.length - 1) {
+                        break;
+                    }
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
                     protoNumber += 2;

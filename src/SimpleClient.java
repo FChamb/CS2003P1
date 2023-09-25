@@ -10,7 +10,7 @@ public class SimpleClient {
     static int socketTimeout = 5000;
     private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
             "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
-            "YOU'RE WELCOME"};
+            "YOU'RE WELCOME", "VALID", "VALID"};
 
     public static void main(String[] args) {
         try {
@@ -60,6 +60,10 @@ public class SimpleClient {
             while (protoNumber < protocol.length) {
                 clientResponse = protocol[protoNumber];
                 if (protoNumber == 0 || serverResponse.equals(protocol[protoNumber - 1])) {
+                    if (protoNumber == protocol.length - 2) {
+                        print.println(clientResponse);
+                        break;
+                    }
                     System.out.println("Input: " + clientResponse);
                     print.println(clientResponse);
                     protoNumber += 2;
