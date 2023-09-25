@@ -62,7 +62,6 @@ public class SimpleClient {
             int port = Integer.parseInt(portnumber);
 
             connection = new Socket(address, port);
-            connection.setSoTimeout(10);
 
             System.out.println("--> Connection to " + connection.toString() + " <--");
         } catch (IOException e) {
