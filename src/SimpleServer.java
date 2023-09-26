@@ -16,7 +16,7 @@ public class SimpleServer {
 
     private static final String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
             "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
-            "YOU'RE WELCOM", "VALID", "VALID"};
+            "YOU'RE WELCOME", "VALID", "VALID"};
 
     /**
      * The main method has two actions. It first grabs the command line argument and ensures that there
