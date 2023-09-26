@@ -14,7 +14,7 @@ public class SimpleServer {
     private static int port;
     private static ServerSocket server;
 
-    private static String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
+    private static final String[] protocol = new String[]{"HELLO ADVISER", "HELLO ADVISEE",
             "ADVISE ME ON TO CS2003", "YOU ARE ADVISED ON TO CS2003", "THANK YOU",
             "YOU'RE WELCOM", "VALID", "VALID"};
 
@@ -74,8 +74,7 @@ public class SimpleServer {
      * server. Two strings are created for the client's and server's response. ProtoNumber is
      * an integer created to keep track of which protocol argument the message is currently on.
      * A while loop that executes until protoNumber reach max length enables the server to grab
-     * the next valid message. First a condition statement ensures the last two "VALID" messages
-     * are not print. Another conditional statement checks that the server response is equal
+     * the next valid message. A conditional statement checks that the server response is equal
      * to protoNumber minus one which would be the appropriate previous message. There is one
      * final check which exists to exit and stop printing to the terminal if the message equals
      * one of the last two protocol messages, "VALID". For each iteration, the server's response
@@ -93,13 +92,11 @@ public class SimpleServer {
             while (protoNumber <= protocol.length) {
                 clientResponse = clientInput.readLine();
                 serverResponse = protocol[protoNumber];
-                if (!clientResponse.equals(protocol[protocol.length - 2]) && protoNumber != protocol.length - 1) {
-                    System.out.println("Output: " + clientResponse);
-                }
                 if (clientResponse.equals(protocol[protoNumber - 1])) {
                     if (protoNumber == protocol.length - 1) {
                         break;
                     }
+                    System.out.println("Output: " + clientResponse);
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
                     protoNumber += 2;
@@ -107,6 +104,7 @@ public class SimpleServer {
                     if (protoNumber == 1) {
                         throw new IOException("Error in protocol!");
                     }
+                    System.out.println("Output: " + clientResponse);
                     serverResponse = protocol[protoNumber - 2];
                     System.out.println("Input: " + serverResponse);
                     print.println(serverResponse);
